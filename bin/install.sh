@@ -7,7 +7,7 @@ fi
 
 # copy necessary files to home,
 # install oh-my-zsh
-if ! [ -f ~/.oh-my-zsh ]; then
+if ! [ -e ~/.oh-my-zsh ]; then
     sh -c "$(curl -fsSL \
     https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
