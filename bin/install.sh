@@ -7,6 +7,8 @@ fi
 
 # copy necessary files to home,
 # install oh-my-zsh
+sh -c "$(curl -fsSL \
+https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 if [ $1 == "remote" ]
 then
     cp ./.remote.zshrc ~/.zshrc
@@ -15,4 +17,3 @@ else
 fi
 cp ./.psqlrc ~ &&
 cp -r ./.ssh ~/.ssh &&
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
