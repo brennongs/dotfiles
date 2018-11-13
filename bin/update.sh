@@ -4,7 +4,7 @@
 cp ~/.zshrc .
 printf "\nCopied .zshrc!\n"
 cp ~/.psqlrc .
-printf "\nCopied .psqlrc!\n"
+printf "\nCopied .psqlrc!\n\n"
 
 # push to git
 git add . ./.[a-z]*
