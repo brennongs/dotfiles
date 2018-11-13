@@ -7,7 +7,7 @@ fi
 
 # copy necessary files to home,
 # install oh-my-zsh
-if [ $1 -eq "remote"]
+if [ $1 -eq "remote" ]
 then
     cp ./.remote.zshrc ~/.zshrc
 else
