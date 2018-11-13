@@ -1,0 +1,9 @@
+\set ON_ERROR_ROLLBACK interactive
+\set COMP_KEYWOARD_CASE upper
+
+\x
+
+\pset null '--'
+\pset border 1
+\pset linestyle unicode
+\pset format wrapped
