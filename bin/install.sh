@@ -19,4 +19,4 @@ else
     cp ./.local.zshrc ~/.zshrc
 fi
 cp ./.psqlrc ~ &&
-cp -r ./.ssh ~/.ssh &&
+cp -r ./.ssh ~/.ssh
