@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # copy necessary files to this dir
+cp -r ~/.oh-my-zsh .
+printf "\nCopied .oh-my-zsh\n"
 cp ~/.zshrc .
 printf "\nCopied .zshrc!\n"
 cp ~/.psqlrc .
