@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# setup -- extended glob support and curl
-shopt -s extglob
-
+# ensure curl
 if ! [ -x "$(command -v curl)" ]; then
     sudo apt install curl -y
 fi
@@ -15,5 +13,7 @@ fi
 
 # copy necessary files to home,
 # install oh-my-zsh
-cp -r ./.[^(git|.|$exclude)]* ~ &&
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL \
+https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+cp -r ./.^(git|*.zshrc|.)* ~ &&
+cp ./.^($exclude).zshrc ~/.zshrc &&
