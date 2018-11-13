@@ -18,4 +18,4 @@ then
 else
     cp ./.local.zshrc ~/.zshrc
 fi
-cp ./.psqlrc ~ &&
+cp ./.psqlrc ~
