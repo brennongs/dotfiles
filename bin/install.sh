@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # ensure curl
-shopt extglob
 if ! [ -x "$(command -v curl)" ]; then
     sudo apt install curl -y
 fi
