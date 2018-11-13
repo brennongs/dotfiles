@@ -7,10 +7,11 @@ fi
 
 # copy necessary files to home,
 # install oh-my-zsh
-if [ $1 -eq "remote"]; then
-    cp ./.remote.zshrc ~/.zshrc &&
+if [ $1 -eq "remote"]
+then
+    cp ./.remote.zshrc ~/.zshrc
 else
-    cp ./.local.zshrc ~/.zshrc &&
+    cp ./.local.zshrc ~/.zshrc
 fi
 cp ./.psql ~ &&
 cp -r ./.ssh ~/.ssh &&
