@@ -1,8 +1,8 @@
 # If this machine is not intended to be a dev server,
 # set this local variable to false
-local PYDEV=true
-local CODE="code"
-if $PYDEV; then
+local pydev=true
+local code="code"
+if [[ $pydev == true ]]; then
   export WORKON_HOME="~/Codes/.env"
   source /usr/local/bin/virtualenvwrapper.sh
 
@@ -30,7 +30,7 @@ if $PYDEV; then
 
   check_for_virtual_env
 else
-  CODE="vi"
+  code="vi"
 fi
 
 # If you come from bash you might have to change your $PATH.
@@ -75,7 +75,7 @@ POWERLEVEL9K_STATUS_OK_IN_NON_VERBOSE=true
 POWERLEVEL9K_STATUS_OK_BACKGROUND="green"
 POWERLEVEL9K_STATUS_OK_FOREGROUND="black"
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND="red"
-POWERLEVEL9K_STATUS_ERROR_FOREGROUND="white"
+POWERLEVEL9K_STATUS_ERROR_FOREGROUND="black"
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND="black"
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND="cyan"
 POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND="black"
@@ -88,9 +88,7 @@ POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
 POWERLEVEL9K_TIME_BACKGROUND="none"
 POWERLEVEL9K_TIME_FOREGROUND="white"
 POWERLEVEL9K_TIME_FORMAT="%D{%l:%M:%S %P}"
-if $PYDEV; then
-  POWERLEVEL9K_HOST_BACKGROUND="none"
-  POWERLEVEL9K_HOST_FOREGROUND="yellow"
+if [[ $pydev == true ]]; then
   POWERLEVEL9K_VIRTUALENV_BACKGROUND="067"
   POWERLEVEL9K_VIRTUALENV_FOREGROUND="221"
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
@@ -104,6 +102,8 @@ if $PYDEV; then
     time
   )
 else
+  POWERLEVEL9K_HOST_BACKGROUND="none"
+  POWERLEVEL9K_HOST_FOREGROUND="yellow"
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     vi_mode
     host
@@ -167,7 +167,7 @@ fi
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-if $PYDEV; then
+if [[ $pydev == true ]]; then
   plugins=(
     django
     sudo
@@ -208,9 +208,9 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 
 alias zource="source ~/.zshrc"
-alias zp="$CODE ~/.zshrc"
-alias pp="$CODE ~/.psqlrc"
-alias omp="$CODE ~/.oh-my-zsh"
+alias zp="$code ~/.zshrc"
+alias pp="$code ~/.psqlrc"
+alias omp="$code ~/.oh-my-zsh"
 alias k="clear"
 alias python="python3"
 alias pip="pip3"
