@@ -13,7 +13,7 @@ fi
 
 # copy necessary files to home,
 # install oh-my-zsh
-cp ./.!($exclude).zshrc ~/.zshrc &&
+cp ./.!$exclude.zshrc ~/.zshrc &&
 cp ./.psql ~ &&
 cp -r ./.ssh ~/.ssh &&
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
