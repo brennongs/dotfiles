@@ -1,43 +1,9 @@
-# If this machine is not intended to be a dev server,
-# set this local variable to false
-local pydev=true
-local code="code"
-if [[ $pydev == true ]]; then
-  export WORKON_HOME="~/Codes/.env"
-  source /usr/local/bin/virtualenvwrapper.sh
-
-  alias mkve="mkvirtualenv"
-  alias rmve="rmvirtualenv"
-  
-  function check_for_virtual_env {
-    [ -d .git ] || git rev-parse --git-dir &> /dev/null
-
-    if [ $? -eq 0 ]; then
-      local ENV_NAME=`basename \`pwd\``
-
-      if [ "${VIRTUAL_ENV##*/}" != $ENV_NAME ] && [ -e $WORKON_HOME/$ENV_NAME/bin/activate ]; then
-        workon $ENV_NAME && export CD_VIRTUAL_ENV=$ENV_NAME
-      fi
-    elif [ $CD_VIRTUAL_ENV ]; then
-      echo "in elif"
-      deactivate && unset CD_VIRTUAL_ENV
-    fi
-  }
-
-  function cd {
-    builtin cd "$@" && check_for_virtual_env
-  }
-
-  check_for_virtual_env
-else
-  code="vi"
-fi
-
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation. 
 export ZSH="/home/$USERNAME/.oh-my-zsh" 
 export KEYTIMEOUT=1
+export WORKON_HOME="~/Codes/.env"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -61,6 +27,8 @@ POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND="008"
 POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND="white"
 POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND="white"
 POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND="black"
+# POWERLEVEL9K_HOST_BACKGROUND="none"
+# POWERLEVEL9K_HOST_FOREGROUND="yellow"
 POWERLEVEL9K_DIR_SHOW_WRITABLE=true
 POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="none"
 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="magenta"
@@ -88,33 +56,19 @@ POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
 POWERLEVEL9K_TIME_BACKGROUND="none"
 POWERLEVEL9K_TIME_FOREGROUND="white"
 POWERLEVEL9K_TIME_FORMAT="%D{%l:%M:%S %P}"
-if [[ $pydev == true ]]; then
-  POWERLEVEL9K_VIRTUALENV_BACKGROUND="067"
-  POWERLEVEL9K_VIRTUALENV_FOREGROUND="221"
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    vi_mode
-    dir
-    status
-  )
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    vcs
-    virtualenv
-    time
-  )
-else
-  POWERLEVEL9K_HOST_BACKGROUND="none"
-  POWERLEVEL9K_HOST_FOREGROUND="yellow"
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    vi_mode
-    host
-    dir
-    status
-  )
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
-    vcs
-    time
-  )
-fi
+POWERLEVEL9K_VIRTUALENV_BACKGROUND="067"
+POWERLEVEL9K_VIRTUALENV_FOREGROUND="221"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+  vi_mode
+  # host
+  dir
+  status
+)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+  vcs
+  virtualenv
+  time
+)
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -167,22 +121,16 @@ fi
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-if [[ $pydev == true ]]; then
-  plugins=(
-    django
-    sudo
-    web-search
-    zsh-syntax-highlighting
-  )
-else
-  plugins=(
-    sudo
-    zsh-syntax-highlighting
-  )
-fi
+plugins=(
+  django
+  sudo
+  web-search
+  zsh-syntax-highlighting
+)
 
 source $ZSH/oh-my-zsh.sh
 # User configuration
+source /usr/local/bin/virtualenvwrapper.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -208,12 +156,15 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 
 alias zource="source ~/.zshrc"
-alias zp="$code ~/.zshrc"
-alias pp="$code ~/.psqlrc"
-alias omp="$code ~/.oh-my-zsh"
+alias zp="code ~/.zshrc"
+alias pp="code ~/.psqlrc"
+alias sp="code ~/.ssh/config"
+alias omp="code ~/.oh-my-zsh"
 alias k="clear"
 alias python="python3"
 alias pip="pip3"
+alias mkve="mkvirtualenv"
+alias rmve="rmvirtualenv"
 alias django="python manage.py"
 
 bindkey -v
@@ -225,3 +176,24 @@ function = {
   calc="${calc//x/*}"
   echo "$(($calc))"
 }
+
+function check_for_virtual_env {
+  [ -d .git ] || git rev-parse --git-dir &> /dev/null
+
+  if [ $? -eq 0 ]; then
+    local ENV_NAME=`basename \`pwd\``
+
+    if [ "${VIRTUAL_ENV##*/}" != $ENV_NAME ] && [ -e $WORKON_HOME/$ENV_NAME/bin/activate ]; then
+      workon $ENV_NAME && export CD_VIRTUAL_ENV=$ENV_NAME
+    fi
+  elif [ $CD_VIRTUAL_ENV ]; then
+    echo "in elif"
+    deactivate && unset CD_VIRTUAL_ENV
+  fi
+}
+
+function cd {
+  builtin cd "$@" && check_for_virtual_env
+}
+
+check_for_virtual_env
