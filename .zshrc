@@ -4,6 +4,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH="/home/$USERNAME/.oh-my-zsh" 
 export KEYTIMEOUT=1
 export WORKON_HOME="~/Codes/.env"
+export DEFAULT_USER=$USER
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -60,7 +61,7 @@ POWERLEVEL9K_VIRTUALENV_BACKGROUND="067"
 POWERLEVEL9K_VIRTUALENV_FOREGROUND="221"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   vi_mode
-  host
+  context
   dir
   status
 )
