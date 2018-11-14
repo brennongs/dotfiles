@@ -15,3 +15,4 @@ fi
 # copy necessary files to ~
 cp ./.zshrc ~
 cp ./.psqlrc ~
+source ~/.zshrc
