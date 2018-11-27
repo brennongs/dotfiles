@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # ensure curl, zsh
-sudo apt install curl zsh -y
-chsh -s $(which zsh) $USER
 
 function install {
+    sudo apt install curl zsh -y
+    chsh -s $(which zsh) $USER
     sh \
         -c "$(curl \
             -fsSLi https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
