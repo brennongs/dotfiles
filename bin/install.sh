@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function install {
-    # ensure curl, zsh
+    # install curl, zsh
     sudo apt install curl zsh -y
     chsh -s $(which zsh) $USER
 
