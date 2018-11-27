@@ -1,5 +1,5 @@
 \set ON_ERROR_ROLLBACK interactive
-\set COMP_KEYWOARD_CASE upper
+\set COMP_KEYWORD_CASE upper
 
 \x
 
