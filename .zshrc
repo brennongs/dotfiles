@@ -182,6 +182,7 @@ alias django="python manage.py"
 
 bindkey -v
 bindkey "^R" history-incremental-search-backward
+unsetopt prompt_cr prompt_sp
 
 function = {
   local IFS=" "
