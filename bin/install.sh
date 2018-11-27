@@ -16,7 +16,7 @@ function install {
         ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 }
 
-if [[ -d ~/.oh-my-zsh ]]; then
+if ![[ -d ~/.oh-my-zsh ]]; then
     install
 fi
 
