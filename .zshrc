@@ -211,7 +211,7 @@ function cd {
 }
 
 function mkurl {
-  echo $1 | tr -d '\│\n\ \\'
+  echo $1 | tr -d '\│\n\|\ \\'
 }
 
 check_for_virtual_env
