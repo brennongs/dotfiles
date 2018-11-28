@@ -72,9 +72,9 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND="221"
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   vi_mode
-  context
   dir
   status
+  context
 )
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
@@ -201,7 +201,6 @@ function check_for_virtual_env {
       workon $ENV_NAME && export CD_VIRTUAL_ENV=$ENV_NAME
     fi
   elif [ $CD_VIRTUAL_ENV ]; then
-    echo "in elif"
     deactivate && unset CD_VIRTUAL_ENV
   fi
 }
