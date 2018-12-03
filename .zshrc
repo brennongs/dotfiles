@@ -179,6 +179,7 @@ alias pip="pip3"
 alias mkve="mkvirtualenv"
 alias rmve="rmvirtualenv"
 alias django="python manage.py"
+alias update="sudo apt update && sudo apt upgrade -y"
 
 bindkey -v
 bindkey "^R" history-incremental-search-backward
