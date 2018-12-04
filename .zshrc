@@ -139,6 +139,7 @@ plugins=(
   sudo
   web-search
   zsh-syntax-highlighting
+  colored-man-pages
 )
 
 source $ZSH/oh-my-zsh.sh
