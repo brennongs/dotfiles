@@ -39,6 +39,7 @@ if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
     sed -i -e 's/code/vim/g' ./src/.zshrc
     sed -i '/WORKON/d' ./src/.zshrc
     sed -i '/virtualenvwrapper/d' ./src/.zshrc
+    sed -i '$ d' ./src/.zshrc
 fi
      
 # copy other necessary files to ~
