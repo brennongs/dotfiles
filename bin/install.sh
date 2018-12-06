@@ -55,10 +55,15 @@ cp ./src/.psqlrc ~
 sudo cp ./src/update.sh /etc/cron.weekly/update
 sudo chmod +x /etc/cron.weekly/update
 
+# set login shell
 chsh -s $(which zsh) $USER
-zsh
-zource
 
+# cleanup
 if [[ $REMOTE -eq true ]]; then
     mv $TMP/.zshrc $DOTFILES
 fi
+rm -rf $TMP
+
+# start new session
+zsh
+zource
