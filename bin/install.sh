@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 export DOTFILES=~/dotfiles
+cd $DOTFILES
 
 function install {
     REMOTE_OMZ=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
