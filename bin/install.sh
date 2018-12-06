@@ -6,6 +6,7 @@ mkdir $TMP
 
 function install {
     REMOTE_OMZ=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+
     # install curl, zsh
     sudo apt install curl zsh -y
 
@@ -43,7 +44,7 @@ if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
     mv $DOTFILES/.zshrc $TMP
     cat $TMP/.zshrc |
     sed -e 's/code/vim/g' |
-    sed -e 's/"$ "/"@ "/' |
+    sed -e 's/"$ "/"\u00a2 "/' |
     sed '/WORKON/d' |
     sed '/virtualenvwrapper/d' |
     sed '139,$ d' >> $TMP/.zshrc.remote
