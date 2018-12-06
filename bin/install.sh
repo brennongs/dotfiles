@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-export DOTFILES=~/dotfiles
-cd $DOTFILES
+TMP=~/dotfiles/tmp
+DOTFILES=~/dotfiles
+mkdir $TMP 
+cd $TMP
 
 function install {
     REMOTE_OMZ=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
@@ -36,14 +38,18 @@ fi
 # check for remote install
 # if remote, change .zshrc to reflect correct changes.
 if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
-    sed -i -e 's/code/vim/g' ./src/.zshrc
-    sed -i -e 's/"$ "/"@ "/' ./src/.zshrc
-    sed -i '/WORKON/d' ./src/.zshrc
-    sed -i '/virtualenvwrapper/d' ./src/.zshrc
-    sed -i '140,$ d' ./src/.zshrc
+    local remote=true
+    touch $TMP/.zshrc.remote
+    mv $DOTFILES/.zshrc $TMP
+    sed -e 's/code/vim/g' $TMP/.zshrc >> $TMP/.zshrc.remote
+    sed -e 's/"$ "/"@ "/' $TMP/.zshrc >> $TMP/.zshrc.remote
+    sed '/WORKON/d' $TMP/.zshrc >> $TMP/.zshrc.remote
+    sed '/virtualenvwrapper/d' $TMP/.zshrc >> $TMP/.zshrc.remote
+    sed '140,$ d' $TMP/.zshrc >> $TMP/.zshrc.remote
+    mv $TMP/.zshrc.remote $DOTFILES/.zshrc
 fi
      
-# copy other necessary files to ~
+# copy necessary files to ~
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
 sudo cp ./src/update.sh /etc/cron.weekly/update
@@ -52,4 +58,7 @@ sudo chmod +x /etc/cron.weekly/update
 chsh -s $(which zsh) $USER
 zsh
 zource
-git stash
+
+if [[ -z $remote ]]; then
+    mv $TMP/.zshrc $DOTFILES
+fi
