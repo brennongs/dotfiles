@@ -90,7 +90,6 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   django
-  sudo
   web-search
   zsh-syntax-highlighting
   colored-man-pages
@@ -128,6 +127,7 @@ alias mkve="mkvirtualenv"
 alias rmve="rmvirtualenv"
 alias django="python manage.py"
 alias update="sudo apt update && sudo apt upgrade -y"
+alias s='sudo'
 
 bindkey -v
 bindkey "^R" history-incremental-search-backward
