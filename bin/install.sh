@@ -52,3 +52,4 @@ sudo chmod +x /etc/cron.weekly/update
 chsh -s $(which zsh) $USER
 zsh
 zource
+git stash
