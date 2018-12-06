@@ -102,7 +102,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR="vim"
 else
-  export EDITOR="code"
+  export EDITOR="vim"
 fi
 
 
@@ -115,10 +115,10 @@ export SSH_KEY_PATH="~/.ssh/ecdsa_id"
 # For a full list of active aliases, run `alias`.
 
 alias zource="source ~/.zshrc"
-alias zp="code ~/.zshrc"
-alias pp="code ~/.psqlrc"
-alias sp="code ~/.ssh/config"
-alias omp="code ~/.oh-my-zsh"
+alias zp="vim ~/.zshrc"
+alias pp="vim ~/.psqlrc"
+alias sp="vim ~/.ssh/config"
+alias omp="vim ~/.oh-my-zsh"
 alias k="clear"
 alias python="python3"
 alias pip="pip3"

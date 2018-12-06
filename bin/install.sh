@@ -32,6 +32,14 @@ if [[ !(-d ~/.oh-my-zsh) ]]; then
     install
 fi
 
+# check for remote install
+# if remote, change .zshrc to reflect correct changes.
+if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
+    sed -i -e 's/code/vim/g' ./src/.zshrc
+    sed -i 'WORKON/d' ./src/.zshrc
+    sed -i 'virtualenvwrapper/d' ./src/.zshrc
+fi
+     
 # copy other necessary files to ~
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
