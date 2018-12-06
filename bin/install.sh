@@ -37,7 +37,7 @@ fi
 # if remote, change .zshrc to reflect correct changes.
 if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
     sed -i -e 's/code/vim/g' ./src/.zshrc
-    sed -i -e 's/"$ "/"@ "' ./src/.zshrc
+    sed -i -e 's/"$ "/"@ "/' ./src/.zshrc
     sed -i '/WORKON/d' ./src/.zshrc
     sed -i '/virtualenvwrapper/d' ./src/.zshrc
     sed -i '140,$ d' ./src/.zshrc
