@@ -41,11 +41,12 @@ if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
     REMOTE=true
     touch $TMP/.zshrc.remote
     mv $DOTFILES/.zshrc $TMP
-    sed -e 's/code/vim/g' $TMP/.zshrc >> $TMP/.zshrc.remote
-    sed -e 's/"$ "/"@ "/' $TMP/.zshrc >> $TMP/.zshrc.remote
-    sed '/WORKON/d' $TMP/.zshrc >> $TMP/.zshrc.remote
-    sed '/virtualenvwrapper/d' $TMP/.zshrc >> $TMP/.zshrc.remote
-    sed '140,$ d' $TMP/.zshrc >> $TMP/.zshrc.remote
+    cat $TMP/.zshrc |
+    sed -e 's/code/vim/g' |
+    sed -e 's/"$ "/"@ "/' |
+    sed '/WORKON/d' |
+    sed '/virtualenvwrapper/d' |
+    sed '140,$ d' >> $TMP/.zshrc.remote
     mv $TMP/.zshrc.remote $DOTFILES/.zshrc
 fi
      
