@@ -38,7 +38,7 @@ fi
 # check for remote install
 # if remote, change .zshrc to reflect correct changes.
 if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
-    $REMOTE=true
+    REMOTE=true
     touch $TMP/.zshrc.remote
     mv $DOTFILES/.zshrc $TMP
     sed -e 's/code/vim/g' $TMP/.zshrc >> $TMP/.zshrc.remote
