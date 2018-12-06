@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 TMP=~/dotfiles/tmp
-DOTFILES=~/dotfiles
+DOTFILES=~/dotfiles/src
+REMOTE=false
 mkdir $TMP 
-cd $TMP
 
 function install {
     REMOTE_OMZ=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
@@ -12,11 +12,11 @@ function install {
     # install oh-my-zsh
     curl \
         -fsSL $REMOTE_OMZ \
-        -o $DOTFILES/omz.sh
-    sed -i "/echo/d" $DOTFILES/omz.sh
-    sed -i "/env zsh/d" $DOTFILES/omz.sh
-    sh $DOTFILES/omz.sh
-    rm -rf $DOTFILES/omz.sh
+        -o $TMP/omz.sh
+    sed -i "/echo/d" $TMP/omz.sh
+    sed -i "/env zsh/d" $TMP/omz.sh
+    sh $TMP/omz.sh
+    rm -rf $TMP/omz.sh
     ZSH_CUSTOM=~/.oh-my-zsh/custom
     
     # install powerlevel9k
@@ -38,7 +38,7 @@ fi
 # check for remote install
 # if remote, change .zshrc to reflect correct changes.
 if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
-    local remote=true
+    $REMOTE=true
     touch $TMP/.zshrc.remote
     mv $DOTFILES/.zshrc $TMP
     sed -e 's/code/vim/g' $TMP/.zshrc >> $TMP/.zshrc.remote
@@ -59,6 +59,6 @@ chsh -s $(which zsh) $USER
 zsh
 zource
 
-if [[ -z $remote ]]; then
+if [[ $REMOTE -eq true ]]; then
     mv $TMP/.zshrc $DOTFILES
 fi
