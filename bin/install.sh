@@ -44,7 +44,6 @@ if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
     mv $DOTFILES/.zshrc $TMP
     cat $TMP/.zshrc |
     sed -e 's/code/vim/g' |
-    sed -e 's/"$ "/"\\u0278 "/' |
     sed '/WORKON/d' |
     sed '/virtualenvwrapper/d' |
     sed '139,$ d' >> $TMP/.zshrc.remote
