@@ -51,7 +51,7 @@ if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
     sed -e 's/code/vim/g' |
     sed '/WORKON/d' |
     sed '/virtualenvwrapper/d' |
-    sed '142,$ d' >> $TMP/.zshrc.remote
+    sed '141,$ d' >> $TMP/.zshrc.remote
     mv $TMP/.zshrc.remote $DOTFILES/.zshrc
 fi
      
