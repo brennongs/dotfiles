@@ -2,8 +2,8 @@
 TMP=~/dotfiles/tmp
 DOTFILES=~/dotfiles/src
 REMOTE=false
-mkdir $TMP 
 
+# init
 function install {
     REMOTE_OMZ=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
 
@@ -31,6 +31,11 @@ function install {
         $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 }
 
+# ============
+# start script
+# ============
+mkdir $TMP 
+
 # check if oh-my-zsh is installed
 if [[ !(-d ~/.oh-my-zsh) ]]; then
     install
@@ -46,7 +51,7 @@ if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
     sed -e 's/code/vim/g' |
     sed '/WORKON/d' |
     sed '/virtualenvwrapper/d' |
-    sed '139,$ d' >> $TMP/.zshrc.remote
+    sed '138,$ d' >> $TMP/.zshrc.remote
     mv $TMP/.zshrc.remote $DOTFILES/.zshrc
 fi
      
