@@ -10,8 +10,8 @@ export DEFAULT_USER=$USER
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
-
+ZSH_THEME="powerlevel9k/powerlevel9k" 
+ 
 # Powerlevel9k settings
 POWERLEVEL9K_MODE="nerdfont-complete"
 # POWERLEVEL9K_DISABLE_RPROMPT=true
@@ -34,6 +34,9 @@ POWERLEVEL9K_CONTEXT_TEMPLATE="%B%F{grey}SSH:%b%f %U%F{blue}$USER%f%u%F{grey}@%B
 POWERLEVEL9K_CONTEXT_REMOTE_BACKGROUND="none"
 POWERLEVEL9K_CONTEXT_REMOTE_FOREGROUND="blue"
 
+POWERLEVEL9K_DIR_SHOW_WRITEABLE=true
+POWERLEVEL9K_DIR_NOT_WRITEABLE_BACKGROUND='none'
+POWERLEVEL9K_DIR_NOT_WRITEABLE_FOREGROUND='red'
 POWERLEVEL9K_DIR_ETC_BACKGROUND="none"
 POWERLEVEL9K_DIR_ETC_FOREGROUND="blue"
 POWERLEVEL9K_DIR_HOME_BACKGROUND="none"
