@@ -1,6 +1,7 @@
 \set ON_ERROR_ROLLBACK interactive
 \set COMP_KEYWORD_CASE upper
 \set PROMPT1 '%[%033[90m%]%/%[%033[0m%] %[%033[33m%]%n%[%033[0m%]@%[%033[1;93m%]%m%[%033[0m%] %R%#%x '
+\set PROMPT2 '%[%033[90m%]%R%[%033[0m%] %x' 
 
 \x
 
