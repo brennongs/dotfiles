@@ -1,5 +1,6 @@
 \set ON_ERROR_ROLLBACK interactive
 \set COMP_KEYWORD_CASE upper
+\set PROMPT1 '%M:%[%033[1;31m%]%>%[%033[0m%] %n@%/%R%#%x '
 
 \x
 
