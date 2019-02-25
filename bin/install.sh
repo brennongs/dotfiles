@@ -58,6 +58,7 @@ fi
 # copy necessary files to ~
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
+cp ./src/.vimrc ~
 sudo cp ./src/update.sh /etc/cron.weekly/update
 sudo chmod +x /etc/cron.weekly/update
 
