@@ -59,7 +59,7 @@ fi
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
 cp ./src/.vimrc ~
-sudo cp ./src/update.sh /etc/cron.weekly/update
+sudo cp ./src/update /etc/cron.weekly
 sudo chmod +x /etc/cron.weekly/update
 
 # set login shell
