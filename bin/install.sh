@@ -1,21 +1,43 @@
 #!/usr/bin/env bash
+# 
+# author: Brennon Schow <brennonschow@gmail.com> gh: @brennongs
+# updated 6/22/2019
+#
 TMP=~/dotfiles/tmp
 DOTFILES=~/dotfiles/src
 REMOTE=false
 
-# init
-function install {
+# cross platform installation
+function inst {
+    if [[ `uname` -eq 'Darwin' ]]; then
+        brew install $1
+    else
+        sudo apt install $1
+    fi
+}
+
+# function for installing all dependencies
+function init {
     REMOTE_OMZ=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
 
+    # install homebrew
+    if [[ `uname` -eq 'Darwin' ]]; then
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+
     # install curl, zsh
-    sudo apt install curl zsh -y
+    inst curl
+    inst zsh
 
     # install oh-my-zsh
     curl \
         -fsSL $REMOTE_OMZ \
         -o $TMP/omz.sh
-    sed -i "/echo/d" $TMP/omz.sh
-    sed -i "/env zsh/d" $TMP/omz.sh
+    if [[ `uname` -eq 'Darwin' ]]; then 
+        sed -i '' '/exec zsh/d' $TMP/omz.sh
+    else
+        sed -i "/exec zsh/d" $TMP/omz.sh
+    fi
     sh $TMP/omz.sh
     rm -rf $TMP/omz.sh
     ZSH_CUSTOM=~/.oh-my-zsh/custom
@@ -38,37 +60,34 @@ mkdir $TMP
 
 # check if oh-my-zsh is installed
 if [[ !(-d ~/.oh-my-zsh) ]]; then
-    install
+    init
+else
+    return
 fi
 
 # check for remote install
 # if remote, change .zshrc to reflect correct changes.
-if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
-    REMOTE=true
-    touch $TMP/.zshrc.remote
-    mv $DOTFILES/.zshrc $TMP
-    cat $TMP/.zshrc |
-    sed -e 's/code/vim/g' |
-    sed '/WORKON/d' |
-    sed '/virtualenvwrapper/d' |
-    sed '141,$ d' >> $TMP/.zshrc.remote
-    mv $TMP/.zshrc.remote $DOTFILES/.zshrc
-fi
+# if [[ !(-z ${SSH_CONNECTION+x}) ]]; then
+#     REMOTE=true
+#     touch $TMP/.zshrc.remote
+#     mv $DOTFILES/.zshrc $TMP
+#     cat $TMP/.zshrc |
+#     sed -e 's/code/vim/g' |
+#     sed '/WORKON/d' |
+#     sed '/virtualenvwrapper/d' |
+#     sed '141,$ d' >> $TMP/.zshrc.remote
+#     mv $TMP/.zshrc.remote $DOTFILES/.zshrc
+# fi
      
 # copy necessary files to ~
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
 cp ./src/.vimrc ~
-sudo cp ./src/update /etc/cron.weekly
-sudo chmod +x /etc/cron.weekly/update
 
 # set login shell
 chsh -s $(which zsh) $USER
 
 # cleanup
-if [[ $REMOTE -eq true ]]; then
-    mv $TMP/.zshrc $DOTFILES
-fi
 rm -rf $TMP
 
 # start new session
