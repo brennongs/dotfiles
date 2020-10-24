@@ -1,9 +1,27 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/Applications/Postgres.app/Contents/Versions/10/bin:$PATH
 # Path to your oh-my-zsh installation. 
 export ZSH="/Users/$USERNAME/.oh-my-zsh" 
 export KEYTIMEOUT=1
 export DEFAULT_USER=$USER
+
+# add nvm to path
+. ~/.nvm/nvm.sh
+
+# Put this into your $HOME/.zshrc to call nvm use automatically whenever you enter a directory that contains an .nvmrc file with a string telling nvm which node to use:
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use --silent
+  elif [[ -f package.json && -r package.json ]]; then
+    nvm use --silent $(cat package.json | node -e "const{stdin}=require('process');stdin.setDefaultEncoding('utf8');let s='';stdin.on('data',d=>{s+=d.toString()});stdin.on('end',_=>{const j=JSON.parse(s);j.hasOwnProperty('engines')&&j.engines.hasOwnProperty('node')?console.log(j.engines.node):console.log('default')})")  
+  elif [[ $(nvm version) != $(nvm version default) ]]; then
+    nvm use --silent default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -52,6 +70,9 @@ POWERLEVEL9K_STATUS_OK_FOREGROUND="green"
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND="none"
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND="red"
 
+POWERLEVEL9K_NVM_BACKGROUND="none"
+POWERLEVEL9K_NVM_FOREGROUND="green"
+
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND="grey"
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND="none"
 POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND="yellow"
@@ -61,10 +82,7 @@ POWERLEVEL9K_VCS_MODIFIED_BACKGROUND="none"
 POWERLEVEL9K_VCS_SHORTEN_LENGTH="20"
 POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH="20"
 POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
-
-POWERLEVEL9K_TIME_BACKGROUND="none"
-POWERLEVEL9K_TIME_FOREGROUND="white"
-POWERLEVEL9K_TIME_FORMAT="%D{%l:%M:%S %P}"
+POWERLEVEL9K_VCS_HIDE_TAGS="true"
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   vi_mode
@@ -75,7 +93,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
 
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   vcs
-  time
+  nvm
 )
 
 # Which plugins would you like to load?
@@ -93,11 +111,11 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR="vim"
-# else
-#   export EDITOR="vim"
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR="vim"
+else
+  export EDITOR="code"
+fi
 
 
 # ssh
@@ -114,7 +132,9 @@ alias pp="code ~/.psqlrc"
 alias sp="code ~/.ssh/config"
 alias omp="code ~/.oh-my-zsh"
 alias k="clear"
+alias update="sudo apt update && sudo apt upgrade -y"
 alias s='sudo'
+alias xclt="sudo rm -rf $(xcode-select -p) && sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install"
 
 bindkey -v
 bindkey "^R" history-incremental-search-backward

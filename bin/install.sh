@@ -8,13 +8,13 @@ DOTFILES=~/dotfiles/src
 REMOTE=false
 
 # cross platform installation
-function inst {
-    if [[ `uname` -eq 'Darwin' ]]; then
-        brew install $1
-    else
-        sudo apt install $1
-    fi
-}
+# function inst {
+#     if [[ `uname` -eq 'Darwin' ]]; then
+#         brew install $1
+#     else
+#         sudo apt install $1
+#     fi
+# }
 
 # function for installing all dependencies
 function init {
@@ -26,18 +26,14 @@ function init {
     fi
 
     # install curl, zsh
-    inst curl
-    inst zsh
+    brew install curl
+    brew install zsh
 
     # install oh-my-zsh
     curl \
         -fsSL $REMOTE_OMZ \
         -o $TMP/omz.sh
-    if [[ `uname` -eq 'Darwin' ]]; then 
-        sed -i '' '/exec zsh/d' $TMP/omz.sh
-    else
-        sed -i "/exec zsh/d" $TMP/omz.sh
-    fi
+    sed -i '' '/exec zsh/d' $TMP/omz.sh
     sh $TMP/omz.sh
     rm -rf $TMP/omz.sh
     ZSH_CUSTOM=~/.oh-my-zsh/custom
@@ -82,7 +78,7 @@ fi
 # copy necessary files to ~
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
-cp ./src/.vimrc ~
+cp ./src/plist/com.brennongs* ~/Library/LaunchAgents
 
 # set login shell
 chsh -s $(which zsh) $USER
