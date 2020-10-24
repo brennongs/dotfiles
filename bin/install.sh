@@ -3,8 +3,7 @@
 # author: Brennon Schow <brennonschow@gmail.com> gh: @brennongs
 # updated 6/22/2019
 #
-TMP=~/dotfiles/tmp
-DOTFILES=~/dotfiles/src
+TMP=~/tmp
 REMOTE=false
 
 # cross platform installation
@@ -21,15 +20,13 @@ function init {
     REMOTE_OMZ=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
 
     # install homebrew
-    if [[ `uname` -eq 'Darwin' ]]; then
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    fi
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
     # install curl, zsh
     brew install curl
     brew install zsh
 
-    # install oh-my-zsh
+    # silently install oh-my-zsh
     curl \
         -fsSL $REMOTE_OMZ \
         -o $TMP/omz.sh
@@ -47,6 +44,12 @@ function init {
     git clone \
         https://github.com/zsh-users/zsh-syntax-highlighting.git \
         $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+
+    # install vscode
+    brew cask install visual-studio-code
+
+    # install slack
+    brew cask install slack
 }
 
 # ============
@@ -57,8 +60,6 @@ mkdir $TMP
 # check if oh-my-zsh is installed
 if [[ !(-d ~/.oh-my-zsh) ]]; then
     init
-else
-    return
 fi
 
 # check for remote install
