@@ -40,6 +40,12 @@ function main {
 
   # install slack
   brew cask install slack
+
+  # install nvm and node
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+
+  # enable key repeat
+  defaults write -g ApplePressAndHoldEnabled -bool false
 }
 
 # ============
@@ -80,3 +86,4 @@ rm -rf $TMP
 # start new session
 zsh
 zource
+nvm install --lts
