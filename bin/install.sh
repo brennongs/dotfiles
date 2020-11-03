@@ -75,7 +75,7 @@ fi
 # copy necessary files to ~
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
-cp ./src/plist/com.brennongs* ~/Library/LaunchAgents
+cp -r ./src/plist/com.brennongs* ~/Library/LaunchAgents/
 
 # set login shell
 chsh -s $(which zsh) $USER

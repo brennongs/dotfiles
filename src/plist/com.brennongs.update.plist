@@ -7,15 +7,19 @@
 
   <key>ProgramArguments</key>
   <array>
-    <string>/usr/local/bin/update</string>
+    <string>/usr/local/bin/brew</string>
+    <string>update</string>
   </array>
 
 
   <key>RunAtLoad</key>
   <true/>
 
-  <key>StartInterval</key>
-  <integer>14400</integer>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>4</integer>
+  </dict>
 
   <key>StandardErrorPath</key>
   <string>/tmp/com.brennongs.update.plist.err</string>
