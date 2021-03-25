@@ -11,6 +11,8 @@ function main {
 
   # install homebrew
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv"' >> /Users/brennon/.zshrc
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
   # install curl, zsh
   brew install curl
@@ -36,10 +38,10 @@ function main {
     $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 
   # install vscode
-  brew cask install visual-studio-code
+  brew install --cask visual-studio-code
 
   # install slack
-  brew cask install slack
+  brew install --cask slack
 
   # install nvm and node
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
