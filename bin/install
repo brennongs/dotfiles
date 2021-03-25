@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 
 # author: Brennon Schow <brennonschow@gmail.com> gh: @brennongs
-# updated 10/23/2020
+# updated 3/24/2021
 #
 TMP=~/tmp
 REMOTE=false
