@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 
 # author: Brennon Schow <brennonschow@gmail.com> gh: @brennongs
-# updated 3/24/2021
+# updated 8/15/2021
 #
 TMP=~/tmp
 REMOTE=false
@@ -13,6 +13,7 @@ function main {
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   echo 'eval "$(/opt/homebrew/bin/brew shellenv"' >> /Users/brennon/.zshrc
   eval "$(/opt/homebrew/bin/brew shellenv)"
+  /opt/homebrew/bin/brew autoupdate start 14400 --upgrade --cleanup
 
   # install curl, zsh
   brew install curl
