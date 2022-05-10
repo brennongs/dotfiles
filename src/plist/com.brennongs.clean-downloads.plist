@@ -2,16 +2,17 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.brennongs.clean</string>
+  <string>com.brennongs.clean-downloads</string>
+
   <key>ProgramArguments</key>
   <array>
-    <string>mv</string>
-    <string>~/Downloads/*(mw+1) ~/Trash</string>
+    <string>/Users/brennon/bin/clean-downloads.sh</string>
   </array>
+
   <key>StartCalendarInterval</key>
   <dict>
     <key>Hour</key>
-    <integer>1</integer>
+    <integer>4</integer>
   </dict>
 </dict>
 </plist>

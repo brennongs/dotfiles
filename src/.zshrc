@@ -146,3 +146,5 @@ function = {
   calc="${calc//x/*}"
   echo "$(($calc))"
 }
+
+    eval "$(/opt/homebrew/bin/brew shellenv)"
