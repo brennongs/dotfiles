@@ -1,9 +1,11 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/Applications/Postgres.app/Contents/Versions/10/bin:$PATH
+export PATH=$HOME/bin:/usr/local/sbin:/usr/local/bin:/Applications/Postgres.app/Contents/Versions/10/bin:$PATH
 # Path to your oh-my-zsh installation. 
 export ZSH="/Users/$USERNAME/.oh-my-zsh" 
 export KEYTIMEOUT=1
 export DEFAULT_USER=$USER
+export GPG_TTY=$(tty)
+gpgconf --launch gpg-agent
 
 # add nvm to path
 . ~/.nvm/nvm.sh
@@ -27,9 +29,12 @@ load-nvmrc
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k" 
+ZSH_THEME="powerlevel10k/powerlevel10k" 
  
+### POWERLEVEL SETTINGS
 # Powerlevel9k settings
+# POWERLEVEL9K_TRANSIENT_PROMPT=always
+POWERLEVEL9K_LEGACY_ICON_SPACING=true
 POWERLEVEL9K_MODE="nerdfont-complete"
 # POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -112,7 +117,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR="vim"
+  export EDITOR="vi"
 else
   export EDITOR="code"
 fi
@@ -126,19 +131,66 @@ export SSH_KEY_PATH="~/.ssh/ecdsa_id"
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-alias zource="source ~/.zshrc"
-alias zp="code ~/.zshrc"
-alias pp="code ~/.psqlrc"
-alias sp="code ~/.ssh/config"
-alias omp="code ~/.oh-my-zsh"
-alias k="clear"
-alias update="sudo apt update && sudo apt upgrade -y"
+### ALIAS ###
+alias zource='source ~/.zshrc'
+alias zp='$EDITOR ~/.zshrc'
+alias vp='$EDITOR ~/.vimrc'
+alias pp='$EDITOR ~/.psqlrc'
+alias sp='$EDITOR ~/.ssh/config'
+alias omp='$EDITOR ~/.oh-my-zsh'
+alias k='clear'
+alias gcx:update-all='(git:update ~/Developer/web.host) & (git:update ~/Developer/api.core) & (git:update ~/Developer/api.graphql-gateway) & (git:update ~/Developer/api.calendar-events) & wait'
 alias s='sudo'
-alias xclt="sudo rm -rf $(xcode-select -p) && sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install"
+alias xclt='sudo rm -rf $(xcode-select -p) && sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install'
+alias core='cd ~/Codes/gcx-core && docker-sync-stack start'
+alias tf='terraform'
+alias proxy:up='(cd ~/Developer/dx.utilities/apps/proxy;npm start)'
+alias proxy:down='(cd ~/Developer/dx.utilities/apps/proxy;npm run stop)'
+alias proxy:bounce='(cd ~/developer/dx.utilities/apps/proxy;npm run stop && npm start)'
 
 bindkey -v
 bindkey "^R" history-incremental-search-backward
 unsetopt prompt_cr prompt_sp
+
+function git:update {
+  cd $1
+  CURRENT_BRANCH=$(git --no-pager branch | grep '*' | awk '{print $2}')
+
+  git stash && git switch master && git pull && git switch $CURRENT_BRANCH
+}
+
+function rake:staging {
+  ssh -t staging ./bin/rake $@
+}
+
+function rake:dev {
+  ssh -t dev ./bin/rake $@
+}
+
+function rake:qa {
+  ssh -t qa ./bin/rake $@
+}
+
+function rake:prod {
+  ssh -t prod ./bin/rake $@
+}
+
+function docker:clear {
+  docker ps -aq | \
+    while read id; do docker stop $id && docker rm $id; done
+}
+
+# function hack {
+#   $EDITOR $(ls "$1/**/*" | fzf)
+# }
+
+function docker:nuke {
+  docker:clear && \
+  docker image ls | \
+    tr -s ' ' | \
+    awk '{print $3}' | \
+    while read id; do docker image rm $id --force; done
+}
 
 function = {
   local IFS=" "
@@ -146,5 +198,8 @@ function = {
   calc="${calc//x/*}"
   echo "$(($calc))"
 }
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+eval "$(rbenv init -)"
 
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
