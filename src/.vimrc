@@ -17,6 +17,7 @@ set history=1000
 set ttimeout
 set ttimeoutlen=1
 set ttyfast
+
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -24,6 +25,7 @@ au BufWinLeave * mkview
 au BufWinEnter * silent loadview
 
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/syntastic'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-ruby/vim-ruby'
@@ -41,6 +43,7 @@ Plug 'w0ng/vim-hybrid'
 Plug 'machakann/vim-highlightedyank'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'ryanoasis/vim-devicons'
+Plug 'preservim/nerdtree'
 call plug#end()
 
 filetype on
@@ -54,4 +57,13 @@ nnoremap <silent> <C-f> :Files<CR>
 nnoremap <silent> <C-g> :GFiles<CR>
 nnoremap <silent> <C-b> :Buffers<CR>
 nnoremap <silent> <C-s> :Rg<CR>
+nnoremap <silent> <C-p> :NERDTreeFocus<CR>
+
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 

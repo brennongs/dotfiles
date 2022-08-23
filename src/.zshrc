@@ -9,6 +9,7 @@ gpgconf --launch gpg-agent
 
 # add nvm to path
 . ~/.nvm/nvm.sh
+stty erase '^?'
 
 # Put this into your $HOME/.zshrc to call nvm use automatically whenever you enter a directory that contains an .nvmrc file with a string telling nvm which node to use:
 # place this after nvm initialization!
@@ -119,7 +120,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR="vi"
 else
-  export EDITOR="code"
+  export EDITOR="vim"
 fi
 
 
@@ -139,25 +140,49 @@ alias pp='$EDITOR ~/.psqlrc'
 alias sp='$EDITOR ~/.ssh/config'
 alias omp='$EDITOR ~/.oh-my-zsh'
 alias k='clear'
-alias gcx:update-all='(git:update ~/Developer/web.host) & (git:update ~/Developer/api.core) & (git:update ~/Developer/api.graphql-gateway) & (git:update ~/Developer/api.calendar-events) & wait'
-alias s='sudo'
 alias xclt='sudo rm -rf $(xcode-select -p) && sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install'
-alias core='cd ~/Codes/gcx-core && docker-sync-stack start'
+alias s='sudo'
 alias tf='terraform'
-alias proxy:up='(cd ~/Developer/dx.utilities/apps/proxy;npm start)'
-alias proxy:down='(cd ~/Developer/dx.utilities/apps/proxy;npm run stop)'
-alias proxy:bounce='(cd ~/developer/dx.utilities/apps/proxy;npm run stop && npm start)'
 
 bindkey -v
 bindkey "^R" history-incremental-search-backward
 unsetopt prompt_cr prompt_sp
 
+function = {
+  local IFS=" "
+  local calc="${*//p/+}"
+  calc="${calc//x/*}"
+  echo "$(($calc))"
+}
+
 function git:update {
   cd $1
   CURRENT_BRANCH=$(git --no-pager branch | grep '*' | awk '{print $2}')
 
-  git stash && git switch master && git pull && git switch $CURRENT_BRANCH
+  git stash && \
+  git switch master && \
+  git pull && \
+  git switch $CURRENT_BRANCH && \
 }
+
+function docker:clear {
+  docker ps -aq | \
+    while read id; do docker stop $id && docker rm $id; done
+}
+
+function docker:nuke {
+  docker:clear && \
+  docker image ls | \
+    tr -s ' ' | \
+    awk '{print $3}' | \
+    while read id; do docker image rm $id --force; done
+}
+
+### GUIDExc specific
+alias gcx:update-all='(git:update ~/Developer/web.host) & (git:update ~/Developer/api.core) & (git:update ~/Developer/api.graphql-gateway) & (git:update ~/Developer/api.calendar-events) & wait'
+alias proxy:up='(cd ~/Developer/dx.utilities/apps/proxy;npm start)'
+alias proxy:down='(cd ~/Developer/dx.utilities/apps/proxy;npm run stop)'
+alias proxy:bounce='(cd ~/developer/dx.utilities/apps/proxy;npm run stop && npm start)'
 
 function rake:staging {
   ssh -t staging ./bin/rake $@
@@ -175,29 +200,6 @@ function rake:prod {
   ssh -t prod ./bin/rake $@
 }
 
-function docker:clear {
-  docker ps -aq | \
-    while read id; do docker stop $id && docker rm $id; done
-}
-
-# function hack {
-#   $EDITOR $(ls "$1/**/*" | fzf)
-# }
-
-function docker:nuke {
-  docker:clear && \
-  docker image ls | \
-    tr -s ' ' | \
-    awk '{print $3}' | \
-    while read id; do docker image rm $id --force; done
-}
-
-function = {
-  local IFS=" "
-  local calc="${*//p/+}"
-  calc="${calc//x/*}"
-  echo "$(($calc))"
-}
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 eval "$(rbenv init -)"
 
