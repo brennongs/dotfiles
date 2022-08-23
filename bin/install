@@ -43,11 +43,6 @@ function install {
       $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
   fi
 
-  if ! command -v code &> /dev/null; then
-    # install vscode
-    brew cask install visual-studio-code
-  fi
-
   # install slack
   brew install --cask slack
 
