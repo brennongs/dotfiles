@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 
-# author: Brennon Schow <brennonschow@gmail.com> gh: @brennongs
-# updated 8/15/2021
+# author: Brennon Schow <me@brennongs.dev> gh: @brennongs
+# updated 8/23/2022
 #
 TMP=~/tmp
 REMOTE=false
@@ -16,15 +16,16 @@ function install {
     eval "$(/opt/homebrew/bin/brew shellenv)"
     /opt/homebrew/bin/brew autoupdate start 14400 --upgrade --cleanup
 
+    # if brew wasn't successful, exit
+    if ! command -v brew &> /dev/null; then
+      exit 1
+    fi
+
     # install curl, zsh
-    brew install curl
+    if ! command -v curl &> /dev/null; then
+      brew install curl
+    fi
   fi
-
-  # if brew wasn't successful, exit
-  if ! command -v brew &> /dev/null; then
-    exit 1
-  fi
-
 
   # if there is no .oh-my-zsh directory
   if [[ !(-d ~/.oh-my-zsh) ]]; then
@@ -55,12 +56,19 @@ function install {
   brew tap epk/epk
   brew install --cask font-sf-mono-nerd-font
 
-  # install fzf
+  # install nvm and node
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+  nvm install 16
+
+  # install vim-plug
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-  # install nvm and node
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+  # install fzf
+  brew install fzf
+
+  # install iterm2
+  brew install --cask iterm2
 
   # enable key repeat
   defaults write -g ApplePressAndHoldEnabled -bool false
