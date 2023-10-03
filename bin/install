@@ -12,9 +12,10 @@ function install {
 
   # install homebrew
   if ! command -v brew &> /dev/null; then
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     /opt/homebrew/bin/brew autoupdate start 14400 --upgrade --cleanup
+(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/brennon/.zshrc
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # if brew wasn't successful, exit
     if ! command -v brew &> /dev/null; then
@@ -58,14 +59,10 @@ function install {
 
   # install nvm and node
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
-  nvm install 16
+  nvm install default
 
-  # install vim-plug
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-  # install fzf
-  brew install fzf
+  # install vscode
+  brew install --cask visual-studio-code
 
   # install iterm2
   brew install --cask iterm2
@@ -79,14 +76,14 @@ function install {
 # ============
 # start script
 # ============
-install
-
 # copy necessary files to ~
 cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
 cp ./src/.p10k.zsh ~
 cp ./src/.vimrc ~
 cp -r ./src/plist/com.brennongs* ~/Library/LaunchAgents/
+
+install
 
 # set login shell
 chsh -s $(which zsh) $USER

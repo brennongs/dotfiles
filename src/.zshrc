@@ -4,8 +4,6 @@ export PATH=$HOME/bin:/usr/local/sbin:/usr/local/bin:/Applications/Postgres.app/
 export ZSH="/Users/$USERNAME/.oh-my-zsh" 
 export KEYTIMEOUT=1
 export DEFAULT_USER=$USER
-export GPG_TTY=$(tty)
-gpgconf --launch gpg-agent
 
 # add nvm to path
 . ~/.nvm/nvm.sh
@@ -120,7 +118,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR="vi"
 else
-  export EDITOR="vim"
+  export EDITOR="code"
 fi
 
 
@@ -176,28 +174,6 @@ function docker:nuke {
     tr -s ' ' | \
     awk '{print $3}' | \
     while read id; do docker image rm $id --force; done
-}
-
-### GUIDExc specific
-alias gcx:update-all='(git:update ~/Developer/web.host) & (git:update ~/Developer/api.core) & (git:update ~/Developer/api.graphql-gateway) & (git:update ~/Developer/api.calendar-events) & wait'
-alias proxy:up='(cd ~/Developer/dx.utilities/apps/proxy;npm start)'
-alias proxy:down='(cd ~/Developer/dx.utilities/apps/proxy;npm run stop)'
-alias proxy:bounce='(cd ~/developer/dx.utilities/apps/proxy;npm run stop && npm start)'
-
-function rake:staging {
-  ssh -t staging ./bin/rake $@
-}
-
-function rake:dev {
-  ssh -t dev ./bin/rake $@
-}
-
-function rake:qa {
-  ssh -t qa ./bin/rake $@
-}
-
-function rake:prod {
-  ssh -t prod ./bin/rake $@
 }
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
