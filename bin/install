@@ -14,7 +14,7 @@ function install {
   if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     /opt/homebrew/bin/brew autoupdate start 14400 --upgrade --cleanup
-(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/brennon/.zshrc
+    (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/brennon/.zshrc
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # if brew wasn't successful, exit
@@ -81,6 +81,7 @@ cp ./src/.zshrc ~
 cp ./src/.psqlrc ~
 cp ./src/.p10k.zsh ~
 cp ./src/.vimrc ~
+mkdir ~/Library/LaunchAgents
 cp -r ./src/plist/com.brennongs* ~/Library/LaunchAgents/
 
 install
